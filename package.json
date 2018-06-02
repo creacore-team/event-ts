@@ -1,0 +1,27 @@
+{
+  "name": "event-ts",
+  "version": "1.0.0",
+  "description": "Simple, standalone and easy event library in typescript",
+  "main": "dist/event-ts.js",
+  "type": "dist/event-ts.d.js",
+  "map":"dist/event-ts.js.map",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creacore-team/event-ts.git"
+  },
+  "author": "Creacore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/creacore-team/event-ts/issues"
+  },
+  "homepage": "https://github.com/creacore-team/event-ts#readme",
+  "devDependencies": {
+  "typescript": "^2.5.3"
+ }
+}
