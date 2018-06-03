@@ -370,4 +370,4 @@ var RemoveListenerEvent = (function () {
     return RemoveListenerEvent;
 }());
 exports.RemoveListenerEvent = RemoveListenerEvent;
-//# sourceMappingURL=event-ts.js.map
+//# sourceMappingURL=index.js.map
