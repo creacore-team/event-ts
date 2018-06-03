@@ -1,9 +1,9 @@
 {
-  "name": "crea-event-ts",
-  "version": "1.0.2",
+  "name": "@creacore/event-ts",
+  "version": "1.0.0",
   "description": "Simple, standalone and easy event library in typescript",
   "main": "dist/index.js",
-  "type": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "map": "dist/index.js.map",
   "scripts": {
     "build": "tsc"
