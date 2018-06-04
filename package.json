@@ -7,7 +7,7 @@
   "map": "dist/index.js.map",
   "scripts": {
     "build": "tsc",
-    "build-examples": "tsc --p ./examples"
+    "build-examples": "tsc ; echo 'library builded' ; tsc --p ./examples ;  echo 'examples builded'"
   },
   "repository": {
     "type": "git",
