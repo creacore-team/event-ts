@@ -20,5 +20,6 @@
   "homepage": "https://github.com/creacore-team/event-ts#readme",
   "devDependencies": {
     "typescript": "^2.5.3"
-  }
+  },
+  "keywords": [ "event",  "dispatcher", "listener", "queued event", "async event", "asynchronous event", "event manager", "simple", "TS", "typed", "typescript", "creacore"]
 }
