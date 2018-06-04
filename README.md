@@ -40,7 +40,7 @@ tsc
 ```
 
 ---
-## Exemples
+## Examples
 
 
 
@@ -48,7 +48,7 @@ tsc
 
 ## API
 
-## <a name="event_decorator"></a> **@Event (decorator)**
+## <a name="event_decorator"></a> ***@Event (decorator)***
 In order to define a class as an event it must be decorated with `@Event` decorator. This decorator take an object as parameter that fullfill the `EventParameter` interface and configure the main behavior of the event. Note that all properties of `EventParameter` are optional.
 
 ```typescript
@@ -84,9 +84,11 @@ class MyEvent
     Two events are considered are equals if they have the _same name_ (they are instance of the same event class) and have the _same emitter_ and if the function testDuplicate return true. If omitted, by default the function `testDuplicate` return `true` no matter the arguments.
 
 
-## <a name="eventmanager"></a> **EventManager (class)**
+## <a name="eventmanager"></a> ***EventManager (class)***
 
-## *Methods*
+### *Methods:*
+
+
 ## addEventListener
 
 The method  `addEventListener` allow to subscribe to an event it takes 2 mandatory parameters and one optional.
@@ -147,19 +149,51 @@ EventManager.deleteEventListener(eventCtor, id):success
 The method  `dispatchEvent` allow to unsubscribe to an event it takes 2 mandatory parameters and one optional.
 
 ```typescript
-EventManager.dispatchEvent(eventCtor, emitter, async, bypassQueue):success
+EventManager.dispatchEvent(eventCtor, emitter, async, bypassQueue) : success
 ```
 
 ## enableQueue
-## disableQueue
-## flushQueue
-## clearQueue
-## follow
-## Properties
-## queueLength
-## queueEnabled
 
-## <a name="eventmanager_events"></a> *EventManager dispatched Event*
+```typescript
+EventManager.enableQueue({removeDuplicate, dontQueueAsync, autoFlushAfter, stackEnableCall}) : void
+```
+
+## disableQueue
+
+```typescript
+EventManager.disableQueue(autoflush, force) : nevent
+```
+
+## flushQueue
+
+```typescript
+EventManager.flushQueue(eventCtor) : nevent
+```
+
+## clearQueue
+
+```typescript
+EventManager.clearQueue() : void
+```
+
+## follow
+
+```typescript
+EventManager.follow(eventACtor , eventBCtor, eventTransformer, emitter) : id
+```
+
+## unfollow
+
+```typescript
+EventManager.unfollow(id) : void
+```
+
+### *Properties:* 
+
+## queueLength : number
+## queueEnabled : boolean
+
+## <a name="eventmanager_events"></a> ***EventManager dispatched Event***
 
 #### TriggerDispatchEvent
 #### AddListenerEvent
