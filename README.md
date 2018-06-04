@@ -42,7 +42,11 @@ tsc
 ---
 ## Examples
 
-
+In order to build the examples run
+```shell
+npm run build-examples
+```
+Examples sources are in `examples/src` directory and the built examples are found under the `example/build` directory and can be run with node.
 
 ---
 
