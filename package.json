@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "map": "dist/index.js.map",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "build-examples": "tsc --p ./examples"
   },
   "repository": {
     "type": "git",
