@@ -1,5 +1,5 @@
 export interface EventArgument<U> {
-    emitter: U;
+    emitter: U | null;
     queued: boolean;
     following: boolean;
 }
@@ -46,7 +46,7 @@ export declare class EventManager {
     static addEventListener<T, U>(ctor: {
         new (...arg: any[]): T;
     }, cb: EventCallback<T, U>, emitter?: U | undefined): ObjectCallbackGeneric;
-    static dispatchEvent<T>(arg: T, emitter: Object, async?: boolean | undefined, bypassQueue?: boolean): boolean;
+    static dispatchEvent<T>(arg: T, emitter?: Object | null, async?: boolean | undefined, bypassQueue?: boolean): boolean;
     private static executeEvent(eventName, argm, async, ctor);
     static deleteEventListener<T>(ctor: {
         new (...arg: any[]): T;
@@ -73,11 +73,11 @@ export declare class TriggerDispatchEvent {
     readonly eventConstructor: {
         new (...arg: any[]): any;
     };
-    readonly originalEmitter: Object;
+    readonly originalEmitter: Object | null;
     readonly listernerNumber: number;
     constructor(callbackArgument: Object, eventName: string, eventConstructor: {
         new (...arg: any[]): any;
-    }, originalEmitter: Object, listernerNumber: number);
+    }, originalEmitter: Object | null, listernerNumber: number);
 }
 export declare class AddListenerEvent {
     readonly eventName: string;

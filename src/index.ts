@@ -17,7 +17,7 @@ class EventCounter
 
 export interface EventArgument<U>
 {
-    emitter:U;
+    emitter:U|null;
     queued:boolean,
     following:boolean
 }
@@ -114,7 +114,7 @@ class ListEventCallback
         }
     }
 
-    public getObjectCallbacks(filter: Object): ObjectCallbackGeneric[]
+    public getObjectCallbacks(filter: Object|null): ObjectCallbackGeneric[]
     {
         return this._objectCallbacks.filter((objc: ObjectCallbackGeneric) => {
             return (objc.emitter == filter || objc.emitter == null);
@@ -161,7 +161,7 @@ export class EventManager
         return ev.register(cb,emitter);        
     }
 
-    public static dispatchEvent<T>(arg:T, emitter:Object, async:boolean|undefined = undefined, bypassQueue:boolean = false):boolean
+    public static dispatchEvent<T>(arg:T, emitter:Object|null = null, async:boolean|undefined = undefined, bypassQueue:boolean = false):boolean
     {
         if(!(<any>arg.constructor).hasBeenEventify)
             throw("Event must be decorated with @Event");
@@ -394,7 +394,7 @@ export class TriggerDispatchEvent
     public readonly callbackArgument:Object,
     public readonly eventName:string,
     public readonly eventConstructor: { new(...arg:any[]): any },
-    public readonly originalEmitter:Object,
+    public readonly originalEmitter:Object|null,
     public readonly listernerNumber:number
     ){}
 }
