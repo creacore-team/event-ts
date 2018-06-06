@@ -204,7 +204,7 @@ export class EventManager
             ev.getObjectCallbacks(argm.emitter).forEach( (c: ObjectCallbackGeneric) => {
                 if(async || (async==undefined && (<any>ctor).async))
                 {
-                    setTimeout(async ()=>c.callback(argm),0);
+                    setTimeout(()=>c.callback(argm),0);
                     
                 }
                 else

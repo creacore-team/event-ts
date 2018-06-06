@@ -26,7 +26,7 @@ EventManager.addEventListener(FirstSimpleEvent,(ev) => {
 // Adding a listener for FirstSimpleEvent when the emitter is myEmitter
 EventManager.addEventListener(FirstSimpleEvent,(ev) => {
     console.log("FirstSimpleEvent with specific emitter catched ! is it myEmitter : ", myEmitter == ev.emitter )
-},myEmitter);
+}, myEmitter);
 
 // Adding a listener for SecondSimpleEvent with no specific emitter, all SecondSimpleEvent are catched
 EventManager.addEventListener(SecondSimpleEvent,(ev) => {
