@@ -34,30 +34,30 @@ let thirdListener = EventManager.addEventListener(SecondSimpleEvent,(ev) => {
 });
 
 // Dispatching a FirstSimpleEvent with no specific emitter
-console.log("  >> Dispatch FirstSimpleEvent");
+    console.log("  >> Dispatch FirstSimpleEvent");
 EventManager.dispatchEvent(new FirstSimpleEvent());
 
 // Dispatching a FirstSimpleEvent with myEmitter as emitter
-console.log("  >> Dispatch FirstSimpleEvent with emitter");
+    console.log("  >> Dispatch FirstSimpleEvent with emitter");
 EventManager.dispatchEvent(new FirstSimpleEvent(),myEmitter);
 
 // Dispatching a SecondSimpleEvent with value = 5 and no emitter
-console.log("  >> Dispatch SecondSimpleEvent");
+    console.log("  >> Dispatch SecondSimpleEvent");
 EventManager.dispatchEvent(new SecondSimpleEvent(5));
 
 // Dispatching a SecondSimpleEvent with value = 10 and no emitter
-console.log("  >> Dispatch SecondSimpleEvent");
+    console.log("  >> Dispatch SecondSimpleEvent");
 EventManager.dispatchEvent(new SecondSimpleEvent(10));
 
-console.log("\n* Delete FirstSimpleEvent listener with no specific emitter");
+    console.log("\n* Delete FirstSimpleEvent listener with no specific emitter");
 let success = EventManager.deleteEventListener(FirstSimpleEvent, firstListener);
-console.log("* Delete success : " + success);
+    console.log("* Delete success : " + success);
 
 // Dispatching a FirstSimpleEvent with no specific emitter
-console.log("  >> Dispatch FirstSimpleEvent");
+    console.log("  >> Dispatch FirstSimpleEvent");
 EventManager.dispatchEvent(new FirstSimpleEvent());
 
-console.log("  >> Dispatch FirstSimpleEvent with emitter");
+    console.log("  >> Dispatch FirstSimpleEvent with emitter");
 // Dispatching a FirstSimpleEvent with myEmitter as emitter
 EventManager.dispatchEvent(new FirstSimpleEvent(),myEmitter);
 
