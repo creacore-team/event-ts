@@ -84,3 +84,18 @@ EventManager.dispatchEvent(new SimpleEvent(10));
 
 console.log("\n* Flush queue, autoflush = true by default");
 EventManager.flushQueue();
+
+console.log("  >> Dispatch SimpleQueuedEvent(11) \t[@Event{queued:'Always'}]");
+EventManager.dispatchEvent(new SimpleQueuedEvent(11));
+
+console.log("  >> Dispatch SimpleQueuedEvent(12) \t[@Event{queued:'Always'}]");
+EventManager.dispatchEvent(new SimpleQueuedEvent(12));
+
+console.log("  >> Dispatch SimpleQueuedEvent(13) \t[@Event{queued:'Always'}]");
+EventManager.dispatchEvent(new SimpleQueuedEvent(13));
+
+console.log("\n* Clear queue no flush");
+EventManager.clearQueue();
+
+console.log("\n* Flush queue, autoflush = true by default");
+EventManager.flushQueue();
