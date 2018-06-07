@@ -41,13 +41,13 @@ EventManager.dispatchEvent(new SimpleEvent(3))
 EventManager.dispatchEvent(new SimpleAsyncEvent(4));
 
     console.log("  >> Dispatch SimpleEvent(5) \t\trequest asynchronous execution a dispatching");
-EventManager.dispatchEvent(new SimpleEvent(5),null,true)
+EventManager.dispatchEvent(new SimpleEvent(5),undefined,true)
 
     console.log("  >> Dispatch SimpleEvent(6)");
 EventManager.dispatchEvent(new SimpleEvent(6))
 
     console.log("  >> Dispatch SimpleAsyncEvent(7) \t[@Event{async:true}] request synchronous! execution a dispatching");
-EventManager.dispatchEvent(new SimpleAsyncEvent(7), null, false)
+EventManager.dispatchEvent(new SimpleAsyncEvent(7), undefined, false)
 
     console.log("  >> Dispatch SimpleEvent(8)");
 EventManager.dispatchEvent(new SimpleEvent(8))

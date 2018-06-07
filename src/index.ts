@@ -17,7 +17,7 @@ class EventCounter
 
 export interface EventArgument<U>
 {
-    emitter:U|null;
+    emitter:U;
     queued:boolean,
     following:boolean
 }
@@ -29,13 +29,7 @@ export class EventFollower
 {
     constructor(    public transform:EventTransformer<Object, Object>,
                     public emitter:Object|null = null,
-                    public ctor:{new(...args:any[]):{}}){}
-}
-
-interface ObjectCallback<T>
-{
-    callback: EventCallback<T, Object>;
-    emitter: Object|null;
+                    public ctor:{new(...args:any[]):{}}|null){}
 }
 
 export interface ObjectCallbackGeneric
@@ -114,10 +108,10 @@ class ListEventCallback
         }
     }
 
-    public getObjectCallbacks(filter: Object|null): ObjectCallbackGeneric[]
+    public getObjectCallbacks(filter: Object|undefined): ObjectCallbackGeneric[]
     {
         return this._objectCallbacks.filter((objc: ObjectCallbackGeneric) => {
-            return (objc.emitter == filter || objc.emitter == null);
+            return (objc.emitter == filter || objc.emitter == undefined);
         });
     }
 }
@@ -126,7 +120,7 @@ class QueuedEvent
 {
     constructor(
         public eventName: string,
-        public argm: Object&EventArgument<Object>,
+        public argm: Object&EventArgument<Object|undefined>,
         public async: boolean|undefined,
         public ctor: {new(...args:any[]):{}}
     ){}
@@ -161,12 +155,12 @@ export class EventManager
         return ev.register(cb,emitter);        
     }
 
-    public static dispatchEvent<T>(arg:T, emitter:Object|null = null, async:boolean|undefined = undefined, bypassQueue:boolean = false):boolean
+    public static dispatchEvent<T>(arg:T, emitter:Object|undefined = undefined, async:boolean|undefined = undefined, bypassQueue:boolean = false):boolean
     {
         if(!(<any>arg.constructor).hasBeenEventify)
             throw("Event must be decorated with @Event");
 
-        let argm : T&EventArgument<Object> = arg as T&EventArgument<Object>;
+        let argm : T&EventArgument<Object|undefined> = arg as T&EventArgument<Object|undefined>;
         argm.emitter = emitter;
         argm.queued = false;
         argm.following = false;
@@ -182,7 +176,7 @@ export class EventManager
         }
     }
 
-    private static executeEvent(eventName:string, argm:Object&Object&EventArgument<Object>, async:boolean|undefined, ctor: {new(...args:any[]):{}})
+    private static executeEvent(eventName:string, argm:Object&Object&EventArgument<Object|undefined>, async:boolean|undefined, ctor: {new(...args:any[]):{}})
     {
         let ev:ListEventCallback|undefined;
 
@@ -242,7 +236,7 @@ export class EventManager
         }
 
         EventManager.dispatchEvent(new RemoveListenerEvent((<any>ctor).eventName,ctor, success),this)
-
+        obj.emitter = undefined;
         return success;
     }
 
@@ -384,6 +378,9 @@ export class EventManager
         {
             (<any>ef.ctor).followers.splice(id,1);
         }
+
+        ef.ctor = null;
+        ef.emitter = null;
     }
 }
 
@@ -394,7 +391,7 @@ export class TriggerDispatchEvent
     public readonly callbackArgument:Object,
     public readonly eventName:string,
     public readonly eventConstructor: { new(...arg:any[]): any },
-    public readonly originalEmitter:Object|null,
+    public readonly originalEmitter:Object|undefined,
     public readonly listernerNumber:number
     ){}
 }

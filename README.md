@@ -13,7 +13,7 @@ The easiest way to install is to use npm :
 npm install @creacore/event-ts
 ```
 
-you need to activate the typescript decorator :
+you need to activate the typescript decorator in your ```tsconfig.js```:
 ```json
 "experimentalDecorators": true
 ```

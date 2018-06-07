@@ -87,7 +87,7 @@ var ListEventCallback = (function () {
     };
     ListEventCallback.prototype.getObjectCallbacks = function (filter) {
         return this._objectCallbacks.filter(function (objc) {
-            return (objc.emitter == filter || objc.emitter == null);
+            return (objc.emitter == filter || objc.emitter == undefined);
         });
     };
     return ListEventCallback;
@@ -117,7 +117,7 @@ var EventManager = (function () {
         return ev.register(cb, emitter);
     };
     EventManager.dispatchEvent = function (arg, emitter, async, bypassQueue) {
-        if (emitter === void 0) { emitter = null; }
+        if (emitter === void 0) { emitter = undefined; }
         if (async === void 0) { async = undefined; }
         if (bypassQueue === void 0) { bypassQueue = false; }
         if (!arg.constructor.hasBeenEventify)
@@ -174,6 +174,7 @@ var EventManager = (function () {
             success = ev.unRegister(obj);
         }
         EventManager.dispatchEvent(new RemoveListenerEvent(ctor.eventName, ctor, success), this);
+        obj.emitter = undefined;
         return success;
     };
     EventManager.queueEvent = function (qe) {
@@ -285,6 +286,8 @@ var EventManager = (function () {
         if (id > -1) {
             ef.ctor.followers.splice(id, 1);
         }
+        ef.ctor = null;
+        ef.emitter = null;
     };
     EventManager._events = new Map();
     EventManager._queuedEvents = [];

@@ -73,7 +73,7 @@ EventManager.dispatchEvent(new SimpleEvent(6));
 
 // Last parameter force to bypass the queue
     console.log("  >> Dispatch SimpleEvent(7) \t\t[@Event{queued:'Default'}] - (bypass queue)");
-EventManager.dispatchEvent(new SimpleEvent(7),null,false,true);
+EventManager.dispatchEvent(new SimpleEvent(7),undefined,false,true);
 
     console.log("\n* The number of queued event is : "+ EventManager.queueLength);
     console.log("\n* Disable queue, autoflush = true by default");

@@ -1,5 +1,5 @@
 export interface EventArgument<U> {
-    emitter: U | null;
+    emitter: U;
     queued: boolean;
     following: boolean;
 }
@@ -10,10 +10,10 @@ export declare class EventFollower {
     emitter: Object | null;
     ctor: {
         new (...args: any[]): {};
-    };
+    } | null;
     constructor(transform: EventTransformer<Object, Object>, emitter: Object | null, ctor: {
         new (...args: any[]): {};
-    });
+    } | null);
 }
 export interface ObjectCallbackGeneric {
     callback: (arg: any) => void;
@@ -46,7 +46,7 @@ export declare class EventManager {
     static addEventListener<T, U>(ctor: {
         new (...arg: any[]): T;
     }, cb: EventCallback<T, U>, emitter?: U | undefined): ObjectCallbackGeneric;
-    static dispatchEvent<T>(arg: T, emitter?: Object | null, async?: boolean | undefined, bypassQueue?: boolean): boolean;
+    static dispatchEvent<T>(arg: T, emitter?: Object | undefined, async?: boolean | undefined, bypassQueue?: boolean): boolean;
     private static executeEvent(eventName, argm, async, ctor);
     static deleteEventListener<T>(ctor: {
         new (...arg: any[]): T;
@@ -73,11 +73,11 @@ export declare class TriggerDispatchEvent {
     readonly eventConstructor: {
         new (...arg: any[]): any;
     };
-    readonly originalEmitter: Object | null;
+    readonly originalEmitter: Object | undefined;
     readonly listernerNumber: number;
     constructor(callbackArgument: Object, eventName: string, eventConstructor: {
         new (...arg: any[]): any;
-    }, originalEmitter: Object | null, listernerNumber: number);
+    }, originalEmitter: Object | undefined, listernerNumber: number);
 }
 export declare class AddListenerEvent {
     readonly eventName: string;
