@@ -2,14 +2,14 @@ import {Event, EventManager} from "./../../dist/index"
 // local import
 
 //Creation of a new Event with no parameter
-@Event({})
+@Event()
 class FirstSimpleEvent
 {
 
 }
 
 //Creation of a new Event with one readonly parameter
-@Event({})
+@Event()
 class SecondSimpleEvent
 {
     constructor(public readonly value:number){}

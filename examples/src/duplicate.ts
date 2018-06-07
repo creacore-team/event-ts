@@ -2,7 +2,7 @@ import {Event, EventManager} from "./../../dist/index"
 // local import
 
 //Creation of a new Event with no parameter
-@Event({})
+@Event()
 class SimpleEvent
 {
     constructor(public readonly id:number){};
@@ -41,7 +41,7 @@ EventManager.addEventListener(SimpleNoRemoveDuplicateEvent,(ev) => {
 let emitter = {};
 
     console.log("\n* Enable queue (removing duplicated event by Default)");
-EventManager.enableQueue({});
+EventManager.enableQueue();
     console.log("\n* EventManager.queueEnabled : " + EventManager.queueEnabled);
 
     console.log("  >> Dispatch SimpleEvent(1) no emitter");
@@ -71,7 +71,7 @@ EventManager.disableQueue();
 
 
     console.log("\n* Enable queue (removing duplicated event by Default)");
-EventManager.enableQueue({});
+EventManager.enableQueue();
     console.log("\n* EventManager.queueEnabled : " + EventManager.queueEnabled);
 
     console.log("  >> Dispatch DuplicateEvent(1) no emitter  \t  \t  \t \t[@Event{testDuplicate}]");
@@ -99,7 +99,7 @@ EventManager.disableQueue();
 
 
 console.log("\n* Enable queue (removing duplicated event by Default)");
-EventManager.enableQueue({});
+EventManager.enableQueue();
     console.log("\n* EventManager.queueEnabled : " + EventManager.queueEnabled);
 
     console.log("  >> Dispatch SimpleNoRemoveDuplicateEvent(1) no emitter   \t  \t \t[@Event{removeDuplicate:false}]");

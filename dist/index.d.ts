@@ -33,7 +33,7 @@ export interface EnableQueueParameter {
     autoFlushAfter?: number;
     stackEnableCall?: boolean;
 }
-export declare function Event({async, queued, tag, removeDuplicate, testDuplicate}: EventParameter): any;
+export declare function Event({async, queued, tag, removeDuplicate, testDuplicate}?: EventParameter): any;
 export declare class EventManager {
     private static _events;
     private static _queuedEvents;
@@ -57,7 +57,7 @@ export declare class EventManager {
     }): number;
     static readonly queueLength: number;
     static readonly queueEnabled: boolean;
-    static enableQueue({removeDuplicate, dontQueueAsync, autoFlushAfter, stackEnableCall}: EnableQueueParameter): void;
+    static enableQueue({removeDuplicate, dontQueueAsync, autoFlushAfter, stackEnableCall}?: EnableQueueParameter): void;
     static disableQueue(autoflush?: boolean, force?: boolean): number;
     static clearQueue(): void;
     static follow<T extends Object, U extends Object>(evo: {

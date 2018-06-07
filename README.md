@@ -52,19 +52,27 @@ Examples sources are in `examples/src` directory and the built examples are foun
 
 ## API
 
-## <a name="event_decorator"></a> ***@Event (decorator)***
+## <a name="event_decorator"></a> ***@Event***
 In order to define a class as an event it must be decorated with `@Event` decorator. This decorator take an object as parameter that fullfill the `EventParameter` interface and configure the main behavior of the event. Note that all properties of `EventParameter` are optional.
 
 ```typescript
 // An event with no parameter
-@Event({})
+@Event()
 class MyEvent
 {
     constructor(public readonly value:number){}
 }
+
+// An event with parameter
+@Event({async:false})
+class AnotherEvent
+{
+    // constructor can be omitted if trivial
+}
 ```
 
 #### `EventParameter`
+The decoratore ```@Event({async, queued, tag, removeDuplicate, testDuplicate})``` can take up to 5 optionals parameters.
 * `async : boolean`
    
    If async is defined as `true` the event is trigger asynchronously, if omitted default is `false`. Note that this parameter can be overide when the event is dispatched.

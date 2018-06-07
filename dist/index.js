@@ -37,7 +37,7 @@ var EventFollower = (function () {
 }());
 exports.EventFollower = EventFollower;
 function Event(_a) {
-    var _b = _a.async, async = _b === void 0 ? false : _b, queued = _a.queued, _c = _a.tag, tag = _c === void 0 ? "" : _c, removeDuplicate = _a.removeDuplicate, testDuplicate = _a.testDuplicate;
+    var _b = _a === void 0 ? {} : _a, _c = _b.async, async = _c === void 0 ? false : _c, queued = _b.queued, _d = _b.tag, tag = _d === void 0 ? "" : _d, removeDuplicate = _b.removeDuplicate, testDuplicate = _b.testDuplicate;
     return function (constructor) {
         return _a = (function (_super) {
                 __extends(class_1, _super);
@@ -228,7 +228,7 @@ var EventManager = (function () {
         configurable: true
     });
     EventManager.enableQueue = function (_a) {
-        var _b = _a.removeDuplicate, removeDuplicate = _b === void 0 ? true : _b, _c = _a.dontQueueAsync, dontQueueAsync = _c === void 0 ? false : _c, _d = _a.autoFlushAfter, autoFlushAfter = _d === void 0 ? -1 : _d, _e = _a.stackEnableCall, stackEnableCall = _e === void 0 ? true : _e;
+        var _b = _a === void 0 ? {} : _a, _c = _b.removeDuplicate, removeDuplicate = _c === void 0 ? true : _c, _d = _b.dontQueueAsync, dontQueueAsync = _d === void 0 ? false : _d, _e = _b.autoFlushAfter, autoFlushAfter = _e === void 0 ? -1 : _e, _f = _b.stackEnableCall, stackEnableCall = _f === void 0 ? true : _f;
         if (!this._queueEnable) {
             this._queueEnable = true;
             this._queueCallStackSize = 0;

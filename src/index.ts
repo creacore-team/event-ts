@@ -63,7 +63,7 @@ export interface EnableQueueParameter
     stackEnableCall?:boolean
 }
 
-export function Event({ async = false, queued , tag ="", removeDuplicate , testDuplicate } : EventParameter):any // decorator
+export function Event({ async = false, queued , tag ="", removeDuplicate , testDuplicate } : EventParameter = {}):any // decorator
 {
     return function<T extends {new(...args:any[]):{}}>(constructor:T) {
         return class extends constructor {
@@ -307,7 +307,7 @@ export class EventManager
         return this._queueEnable;
     }
 
-    public static enableQueue({removeDuplicate = true, dontQueueAsync = false, autoFlushAfter = -1, stackEnableCall = true}:EnableQueueParameter):void
+    public static enableQueue({removeDuplicate = true, dontQueueAsync = false, autoFlushAfter = -1, stackEnableCall = true}:EnableQueueParameter = {}):void
     {
         if(!this._queueEnable)
         {
