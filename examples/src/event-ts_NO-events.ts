@@ -10,17 +10,7 @@ class FirstSimpleEvent
 
 }
 
-console.log(" ! you should execute event-ts_NO-events.ts BEFORE in order to compare ")
-
-EventManager.addEventListener(AddListenerEvent, (ev) => {
-    console.log("There now "+ ev.listernerNumber +" guy interested in listening to ... " + ev.eventName);
-});
-
-EventManager.addEventListener(TriggerDispatchEvent, (ev) => {
-
-    console.log("Event "+  ev.eventName + " has been dispatched.\n"+
-                "There is "+  ev.listernerNumber + " listener interested by this event");
-});
+console.log(" ! you should execute event-ts_events.ts AFTER to compare ")
 
 EventManager.addEventListener(FirstSimpleEvent,()=>{console.log("receive a FirstSimpleEvent")})
 EventManager.addEventListener(FirstSimpleEvent,()=>{console.log("Yay !")})
@@ -31,7 +21,3 @@ OtherLibFunc2();
 
 EventManager.dispatchEvent(new FirstSimpleEvent());
 OtherLibFunc2();
-
-// TriggerDispatchEvent
-// AddListenerEvent
-// RemoveListenerEvent
