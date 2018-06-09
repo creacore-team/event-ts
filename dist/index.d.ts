@@ -84,9 +84,10 @@ export declare class AddListenerEvent {
     readonly eventConstructor: {
         new (...arg: any[]): any;
     };
+    readonly listernerNumber: number;
     constructor(eventName: string, eventConstructor: {
         new (...arg: any[]): any;
-    });
+    }, listernerNumber: number);
 }
 export declare class RemoveListenerEvent {
     readonly eventName: string;

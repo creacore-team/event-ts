@@ -61,7 +61,7 @@ export function Event({ async = false, queued , tag ="", removeDuplicate , testD
 {
     return function<T extends {new(...args:any[]):{}}>(constructor:T) {
         return class extends constructor {
-            static readonly eventName:string = ((tag == "")?tag+"_":"") + "EVENTIFY_" + constructor.name +"_"+ EventCounter.generateId();
+            static readonly eventName:string = ((tag != "")?tag+"_":"") + "EVENTIFY_" + constructor.name +"_"+ EventCounter.generateId();
             static readonly hasBeenEventify:boolean = true;
             static readonly async:boolean = async;
             static readonly queued:string = (queued !== undefined)?queued:((async)?"Never":"Default");
@@ -150,7 +150,7 @@ export class EventManager
             ev = new ListEventCallback(ctor)
             this._events.set((<any>ctor).eventName, ev);
         }
-        EventManager.dispatchEvent(new AddListenerEvent((<any>ctor).eventName,ctor),this)
+        EventManager.dispatchEvent(new AddListenerEvent((<any>ctor).eventName,ctor,(ev)?ev.getObjectCallbacks(emitter).length+1:1),this)
 
         return ev.register(cb,emitter);        
     }
@@ -384,7 +384,7 @@ export class EventManager
     }
 }
 
-@Event({tag:"EventManager", async:true})
+@Event({tag:"EventManager", async:false, queued:"Never"})
 export class TriggerDispatchEvent
 {
     constructor(
@@ -396,16 +396,17 @@ export class TriggerDispatchEvent
     ){}
 }
 
-@Event({tag:"EventManager", async:true})
+@Event({tag:"EventManager", async:false, queued:"Never"})
 export class AddListenerEvent
 {
     constructor(
     public readonly eventName:string,
-    public readonly eventConstructor: { new(...arg:any[]): any }
+    public readonly eventConstructor: { new(...arg:any[]): any },
+    public readonly listernerNumber:number
     ){}
 }
 
-@Event({tag:"EventManager", async:true})
+@Event({tag:"EventManager", async:false, queued:"Never"})
 export class RemoveListenerEvent
 {
     constructor(

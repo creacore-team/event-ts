@@ -46,7 +46,7 @@ function Event(_a) {
                 }
                 return class_1;
             }(constructor)),
-            _a.eventName = ((tag == "") ? tag + "_" : "") + "EVENTIFY_" + constructor.name + "_" + EventCounter.generateId(),
+            _a.eventName = ((tag != "") ? tag + "_" : "") + "EVENTIFY_" + constructor.name + "_" + EventCounter.generateId(),
             _a.hasBeenEventify = true,
             _a.async = async,
             _a.queued = (queued !== undefined) ? queued : ((async) ? "Never" : "Default"),
@@ -113,7 +113,7 @@ var EventManager = (function () {
             ev = new ListEventCallback(ctor);
             this._events.set(ctor.eventName, ev);
         }
-        EventManager.dispatchEvent(new AddListenerEvent(ctor.eventName, ctor), this);
+        EventManager.dispatchEvent(new AddListenerEvent(ctor.eventName, ctor, (ev) ? ev.getObjectCallbacks(emitter).length + 1 : 1), this);
         return ev.register(cb, emitter);
     };
     EventManager.dispatchEvent = function (arg, emitter, async, bypassQueue) {
@@ -309,18 +309,19 @@ var TriggerDispatchEvent = (function () {
         this.listernerNumber = listernerNumber;
     }
     TriggerDispatchEvent = __decorate([
-        Event({ tag: "EventManager", async: true })
+        Event({ tag: "EventManager", async: false, queued: "Never" })
     ], TriggerDispatchEvent);
     return TriggerDispatchEvent;
 }());
 exports.TriggerDispatchEvent = TriggerDispatchEvent;
 var AddListenerEvent = (function () {
-    function AddListenerEvent(eventName, eventConstructor) {
+    function AddListenerEvent(eventName, eventConstructor, listernerNumber) {
         this.eventName = eventName;
         this.eventConstructor = eventConstructor;
+        this.listernerNumber = listernerNumber;
     }
     AddListenerEvent = __decorate([
-        Event({ tag: "EventManager", async: true })
+        Event({ tag: "EventManager", async: false, queued: "Never" })
     ], AddListenerEvent);
     return AddListenerEvent;
 }());
@@ -332,7 +333,7 @@ var RemoveListenerEvent = (function () {
         this.success = success;
     }
     RemoveListenerEvent = __decorate([
-        Event({ tag: "EventManager", async: true })
+        Event({ tag: "EventManager", async: false, queued: "Never" })
     ], RemoveListenerEvent);
     return RemoveListenerEvent;
 }());
