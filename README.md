@@ -1,6 +1,6 @@
 # @creacore/event-ts
 ## Description
-The library event-ts is a standalone typescript library for managing event. It make heavy use of type system in order to provide helpful hints and compilation errors. It provide a decorator [`@Event`](#event_decorator) to create new event classes and a static class [`EventManager`](#eventmanager) to listen, dispatch and manage all events.
+The library event-ts is a standalone typescript library for managing events. It makes heavy use of type system in order to provide helpful hints and compilation errors. It provides a decorator [`@Event`](#event_decorator) to create new event classes and a static class [`EventManager`](#eventmanager) to listen, dispatch and manage all events.
 
 ---
 
@@ -25,7 +25,7 @@ import {Event, EventManager} from "@creacore/event-ts";
 
 ### git and build
 
-you can also clone the project on github
+you can also clone the project from github
 
 ```shell
 git clone https://github.com/creacore-team/event-ts.git
@@ -42,7 +42,7 @@ tsc
 ---
 ## Examples
 
-In order to build the examples run
+You can build the examples provided in repository, simply run
 ```shell
 npm run build-examples
 ```
@@ -53,7 +53,7 @@ Examples sources are in `examples/src` directory and the built examples are foun
 ## API
 
 ## <a name="event_decorator"></a> ***@Event***
-In order to define a class as an event it must be decorated with `@Event` decorator. This decorator take an object as parameter that fullfill the `EventParameter` interface and configure the main behavior of the event. Note that all properties of `EventParameter` are optional.
+In order to define a class as an event, it must be decorated with `@Event` decorator. This decorator takes an object as a parameter that fulfill the `EventParameter` interface and configure the main behavior of the event. Note that all properties of `EventParameter` are optional.
 
 ```typescript
 // An event with no parameter
@@ -75,25 +75,25 @@ class AnotherEvent
 The decoratore ```@Event({async, queued, tag, removeDuplicate, testDuplicate})``` can take up to 5 optionals parameters.
 * `async : boolean`
    
-   If async is defined as `true` the event is trigger asynchronously, if omitted default is `false`. Note that this parameter can be overide when the event is dispatched.
+   If async is defined at `true`, the event is triggered asynchronously. If omitted, default is `false`. Note that this parameter can be overridden when the event is dispatched.
 
 * `queued : "Always" | "Never" | "Default"`
-  * Always : the event is always queued and is dispatch only when the queue is flush
+  * Always : the event is always queued and is dispatched only when the queue is flushed
   * Never : the event is never queued, even when the queue is manually enabled
   * Automatic : the event is queued only when the queue is enabled. The async event are never queued.
 
 
 * `tag : string`
 
-    This tag is added at the beginning of the auto-generated event name. This is usefull when you want to track your events in order to debug code.
+    This tag is added at the beginning of the auto-generated event name. This is useful when you want to track your events to debug code.
 
 * `removeDuplicate : boolean`
 
-    When events are queued the duplicated event are remove (the last one is conserved). The default value is `true`
+    When events are queued the duplicated event are removed (the last one is conserved). The default value is `true`
 
 * `testDuplicate :(e1:any, e2:any) => boolean`
 
-    Two events are considered are equals if they have the _same name_ (they are instance of the same event class) and have the _same emitter_ and if the function testDuplicate return true. If omitted, by default the function `testDuplicate` return `true` no matter the arguments.
+    Two events are considered equals if they have the _same name_ (they are instance of the same event class) and have the _same emitter_ and if the function testDuplicate return true. If omitted, by default the function `testDuplicate` return `true` no matter the arguments.
 
 
 ## <a name="eventmanager"></a> ***EventManager (class)***
@@ -103,7 +103,7 @@ The decoratore ```@Event({async, queued, tag, removeDuplicate, testDuplicate})``
 
 ## addEventListener
 
-The method  `addEventListener` allow to subscribe to an event it takes 2 mandatory parameters and one optional.
+The method  `addEventListener` allow to subscribe to an event. It takes 2 mandatory parameters and one optional.
 
 ```typescript
 EventManager.addEventListener(eventCtor, callback, emitter?):id
@@ -111,11 +111,11 @@ EventManager.addEventListener(eventCtor, callback, emitter?):id
 
 * `eventCtor`
 
-    Is the class name of you event (this is actually the constructor of you event class - after the application of the decorator event). This determine the event to which you subscribe
+    The class name of you event (this is actually the constructor of you event class - after the application of the decorator event). This determines the event to which you subscribe.
 
 * `callback`
 
-    Is a callback function call each time your event is dispatched. It take as argument an instance of the Event class youre listening whith three parameters addition :
+    Function that is called each time your event is dispatched. It take as argument an instance of the Event class you are listening to with three additional parameters :
 
     * `emitter` : Object
         
@@ -130,15 +130,15 @@ EventManager.addEventListener(eventCtor, callback, emitter?):id
         A boolean value which is true if the event has been dispatched because it is following another event.
 
 * `emitter` : Object (*optional*)
-    An object which must be the emitter of the event in order to trigger the callback. If emitter is *undefined* all emitters trigger the callback.
+    Object that must be the emitter of the event to trigger the callback. If emitter is *undefined* all emitters trigger the callback.
 
 * `id` : Object (__return value__)
 
-    An object that can be used as an id to refer to the link between the event and the callback (the exact type is `ObjectCallbackGeneric` but it should never be used otherwise than an id).
+    Object that can be used as an id to refer to the link between the event and the callback (the exact type is `ObjectCallbackGeneric` but it should never be used otherwise than an id).
 
 ## deleteEventListener
 
-The method  `deleteEventListener` allow to unsubscribe to an event it takes 2 mandatory parameters and one optional.
+The method  `deleteEventListener` allow to unsubscribe to an event. It takes 2 mandatory parameters and one optional.
 
 ```typescript
 EventManager.deleteEventListener(eventCtor, id):success
@@ -146,11 +146,11 @@ EventManager.deleteEventListener(eventCtor, id):success
 
 * `eventCtor`
 
-    Is the class name of you event (this is actually the constructor of you event class - after the application of the decorator event). This determine the event to which you subscribe.
+    Class name of you event (this is actually the constructor of you event class - after the application of the decorator event). This determines the event to which you subscribe.
 
 * `id` : Object
 
-    An object that refer to the link between the event and the callback (the exact type is `ObjectCallbackGeneric` but it should never be used otherwise than an id).
+    Object that refer to the link between the event and the callback (the exact type is `ObjectCallbackGeneric` but it should never be used otherwise than an id).
 
 * `success` : boolean (__return value__)
 
@@ -158,7 +158,7 @@ EventManager.deleteEventListener(eventCtor, id):success
 
 ## dispatchEvent
 
-The method  `dispatchEvent` allow to unsubscribe to an event it takes 2 mandatory parameters and one optional.
+The method  `dispatchEvent` allow to unsubscribe to an event. It takes 2 mandatory parameters and one optional.
 
 ```typescript
 EventManager.dispatchEvent(eventCtor, emitter, async, bypassQueue) : success
