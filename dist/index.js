@@ -39,6 +39,7 @@ exports.EventFollower = EventFollower;
 function Event(_a) {
     var _b = _a === void 0 ? {} : _a, _c = _b.async, async = _c === void 0 ? false : _c, queued = _b.queued, _d = _b.tag, tag = _d === void 0 ? "" : _d, removeDuplicate = _b.removeDuplicate, testDuplicate = _b.testDuplicate;
     return function (constructor) {
+        var _a;
         return _a = (function (_super) {
                 __extends(class_1, _super);
                 function class_1() {
@@ -54,7 +55,6 @@ function Event(_a) {
             _a.testDuplicate = (removeDuplicate == false) ? function (e1, e2) { return false; } : (testDuplicate) ? testDuplicate : function (e1, e2) { return true; },
             _a.followers = [],
             _a;
-        var _a;
     };
 }
 exports.Event = Event;

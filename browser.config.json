@@ -2,9 +2,9 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es2017", "dom"],
-    "declaration": true,
-    "sourceMap": true,
-    "outDir": "dist",
+    "declaration": false,
+    "sourceMap": false,
+    "outDir": "/browser",
     "rootDir": "./src",
     "removeComments": true,
     "strict": true,
@@ -15,8 +15,5 @@
     "./dist",
     "./test",
     "./examples"
-  ],
-  "files": [
-    "./src/index.ts"
   ]
 }

@@ -7,6 +7,7 @@
   "map": "dist/index.js.map",
   "scripts": {
     "build": "tsc",
+    "build-browser": " webpack",
     "build-examples": "tsc ; echo 'library built' ; tsc --p ./examples ;  echo 'examples built'"
   },
   "repository": {
@@ -20,7 +21,9 @@
   },
   "homepage": "https://github.com/creacore-team/event-ts#readme",
   "devDependencies": {
-    "typescript": "^2.5.3"
+    "ts-loader": "^4.4.1",
+    "typescript": "^2.9.1",
+    "webpack-cli": "^3.0.3"
   },
   "keywords": [
     "event",

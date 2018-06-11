@@ -38,6 +38,11 @@ or with typescript compiler only
 ```shell
 tsc
 ```
+In order to user `event-ts` in a browser the library need to be browserify.
+```shell
+npm run build-browser
+```
+create the file `event-ts.js` in the folder browser with the main declaraction of the library store in a variable `EVENTTS`.
 
 ---
 ## Examples
