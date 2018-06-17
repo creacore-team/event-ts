@@ -167,11 +167,40 @@ export class EventManager
 
         if(((<any>arg.constructor).queued == "Always") || ((!bypassQueue) && (this._queueEnable) && !((<any>arg.constructor).queued == "Never") && (!(<any>arg.constructor).async || !this._dontQueueAsync)))
         {
-            return this.queueEvent(new QueuedEvent((<any>arg.constructor).eventName,argm,async,(<any>arg.constructor)))
+            let ret = this.queueEvent(new QueuedEvent((<any>arg.constructor).eventName,argm,async,(<any>arg.constructor)));
+
+            (((<any>arg).constructor).followers).forEach((t:EventFollower)=>
+            {
+                if(t.emitter === null || argm.emitter == t.emitter)
+                {
+                    let arg : any = t.transform(argm);
+                    arg.emitter = argm.emitter;
+                    arg.queued = argm.queued;
+                    arg.following = true;
+
+                    this.queueEvent(new QueuedEvent((<any>arg).constructor.eventName, arg,async, arg.constructor))
+                }
+            });
+
+            return ret;
         }
         else
         {
-            this.executeEvent((<any>arg.constructor).eventName,argm,async,(<any>arg.constructor))
+            this.executeEvent((<any>arg.constructor).eventName,argm,async,(<any>arg.constructor));
+
+            (((<any>arg).constructor).followers).forEach((t:EventFollower)=>
+            {
+                if(t.emitter === null || argm.emitter == t.emitter)
+                {
+                    let arg : any = t.transform(argm);
+                    arg.emitter = argm.emitter;
+                    arg.queued = argm.queued;
+                    arg.following = true;
+
+                    this.executeEvent((<any>arg).constructor.eventName, arg,async, arg.constructor)
+                }
+            });
+
             return true;
         }
     }
@@ -207,7 +236,7 @@ export class EventManager
                 }
             });
 
-            ((<any>ev.event).followers).forEach((t:EventFollower)=>
+            /*((<any>ev.event).followers).forEach((t:EventFollower)=>
             {
                 if(t.emitter === null || argm.emitter == t.emitter)
                 {
@@ -219,7 +248,7 @@ export class EventManager
                     this.executeEvent((<any>arg).constructor.eventName, arg,async, arg.constructor)
                 }
                 
-            })
+            })*/
         }
     }
 
@@ -268,9 +297,9 @@ export class EventManager
         {
             let nevent = this._queuedEvents.length;
 
-            this._queuedEvents.forEach(qe=>{
+            for(let qe of this._queuedEvents){
                 this.executeEvent(qe.eventName,qe.argm,qe.async,qe.ctor);
-            })
+            }
 
             this._queuedEvents.length = 0;
         }
@@ -281,9 +310,9 @@ export class EventManager
 
             let nevent = eventFlushed.length;
 
-            eventFlushed.forEach(qe=>{
+            for(let qe of eventFlushed){
                 this.executeEvent(qe.eventName,qe.argm,qe.async,qe.ctor);
-            })
+            }
 
             this._queuedEvents = eventSaved;
         }

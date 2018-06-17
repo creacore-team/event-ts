@@ -117,6 +117,7 @@ var EventManager = (function () {
         return ev.register(cb, emitter);
     };
     EventManager.dispatchEvent = function (arg, emitter, async, bypassQueue) {
+        var _this = this;
         if (emitter === void 0) { emitter = undefined; }
         if (async === void 0) { async = undefined; }
         if (bypassQueue === void 0) { bypassQueue = false; }
@@ -127,15 +128,33 @@ var EventManager = (function () {
         argm.queued = false;
         argm.following = false;
         if ((arg.constructor.queued == "Always") || ((!bypassQueue) && (this._queueEnable) && !(arg.constructor.queued == "Never") && (!arg.constructor.async || !this._dontQueueAsync))) {
-            return this.queueEvent(new QueuedEvent(arg.constructor.eventName, argm, async, arg.constructor));
+            var ret = this.queueEvent(new QueuedEvent(arg.constructor.eventName, argm, async, arg.constructor));
+            ((arg.constructor).followers).forEach(function (t) {
+                if (t.emitter === null || argm.emitter == t.emitter) {
+                    var arg_1 = t.transform(argm);
+                    arg_1.emitter = argm.emitter;
+                    arg_1.queued = argm.queued;
+                    arg_1.following = true;
+                    _this.queueEvent(new QueuedEvent(arg_1.constructor.eventName, arg_1, async, arg_1.constructor));
+                }
+            });
+            return ret;
         }
         else {
             this.executeEvent(arg.constructor.eventName, argm, async, arg.constructor);
+            ((arg.constructor).followers).forEach(function (t) {
+                if (t.emitter === null || argm.emitter == t.emitter) {
+                    var arg_2 = t.transform(argm);
+                    arg_2.emitter = argm.emitter;
+                    arg_2.queued = argm.queued;
+                    arg_2.following = true;
+                    _this.executeEvent(arg_2.constructor.eventName, arg_2, async, arg_2.constructor);
+                }
+            });
             return true;
         }
     };
     EventManager.executeEvent = function (eventName, argm, async, ctor) {
-        var _this = this;
         var ev;
         ev = EventManager._events.get(eventName);
         if (ctor != TriggerDispatchEvent) {
@@ -152,15 +171,6 @@ var EventManager = (function () {
                 }
                 else {
                     c.callback(argm);
-                }
-            });
-            (ev.event.followers).forEach(function (t) {
-                if (t.emitter === null || argm.emitter == t.emitter) {
-                    var arg = t.transform(argm);
-                    arg.emitter = argm.emitter;
-                    arg.queued = argm.queued;
-                    arg.following = true;
-                    _this.executeEvent(arg.constructor.eventName, arg, async, arg.constructor);
                 }
             });
         }
@@ -194,22 +204,23 @@ var EventManager = (function () {
         return false;
     };
     EventManager.flushQueue = function (ctor) {
-        var _this = this;
         var nevent = 0;
         if (ctor === undefined) {
             var nevent_1 = this._queuedEvents.length;
-            this._queuedEvents.forEach(function (qe) {
-                _this.executeEvent(qe.eventName, qe.argm, qe.async, qe.ctor);
-            });
+            for (var _i = 0, _a = this._queuedEvents; _i < _a.length; _i++) {
+                var qe = _a[_i];
+                this.executeEvent(qe.eventName, qe.argm, qe.async, qe.ctor);
+            }
             this._queuedEvents.length = 0;
         }
         else {
             var eventSaved = this._queuedEvents.filter(function (qe) { return qe.ctor !== ctor; });
             var eventFlushed = this._queuedEvents.filter(function (qe) { return qe.ctor === ctor; });
             var nevent_2 = eventFlushed.length;
-            eventFlushed.forEach(function (qe) {
-                _this.executeEvent(qe.eventName, qe.argm, qe.async, qe.ctor);
-            });
+            for (var _b = 0, eventFlushed_1 = eventFlushed; _b < eventFlushed_1.length; _b++) {
+                var qe = eventFlushed_1[_b];
+                this.executeEvent(qe.eventName, qe.argm, qe.async, qe.ctor);
+            }
             this._queuedEvents = eventSaved;
         }
         return nevent;
