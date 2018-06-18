@@ -85,6 +85,17 @@ var ListEventCallback = (function () {
             return false;
         }
     };
+    ListEventCallback.prototype.clearAllCallback = function () {
+        this._objectCallbacks.length = 0;
+    };
+    ListEventCallback.prototype.clearCallbackOf = function (filter) {
+        for (var i = 0; i < this._objectCallbacks.length; i++) {
+            if (this._objectCallbacks[i].emitter == filter) {
+                this._objectCallbacks.splice(i, 1);
+                i--;
+            }
+        }
+    };
     ListEventCallback.prototype.getObjectCallbacks = function (filter) {
         return this._objectCallbacks.filter(function (objc) {
             return (objc.emitter == filter || objc.emitter == undefined);
@@ -299,6 +310,42 @@ var EventManager = (function () {
         }
         ef.ctor = null;
         ef.emitter = null;
+    };
+    EventManager.compressQueue = function (keep, erase, sameEmitters) {
+        if (sameEmitters === void 0) { sameEmitters = true; }
+        if (!keep.hasBeenEventify) {
+            throw ("Event must be decorated with @Event");
+        }
+        for (var _i = 0, erase_1 = erase; _i < erase_1.length; _i++) {
+            var evo = erase_1[_i];
+            if (!evo.hasBeenEventify) {
+                throw ("Event must be decorated with @Event");
+            }
+        }
+        var allKeptEmitters = [];
+        var oneEmitter = false;
+        for (var _a = 0, _b = this._queuedEvents; _a < _b.length; _a++) {
+            var qev = _b[_a];
+            if (qev.eventName == keep.eventName) {
+                oneEmitter = true;
+                if (qev.argm.emitter)
+                    allKeptEmitters.push(qev.argm.emitter);
+            }
+        }
+        console.log(allKeptEmitters);
+        if (sameEmitters && allKeptEmitters.length > 0) {
+            this._queuedEvents = this._queuedEvents.filter(function (qev) {
+                var sameName = erase.some(function (ev) { return ev.eventName == qev.eventName; });
+                var se = allKeptEmitters.some(function (em) { return (em) == qev.argm.emitter; });
+                return (!sameName || !se);
+            });
+        }
+        if (!sameEmitters && oneEmitter) {
+            this._queuedEvents = this._queuedEvents.filter(function (qev) {
+                var sameName = erase.some(function (ev) { return ev.eventName == qev.eventName; });
+                return (!sameName);
+            });
+        }
     };
     EventManager._events = new Map();
     EventManager._queuedEvents = [];

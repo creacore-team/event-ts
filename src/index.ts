@@ -108,6 +108,23 @@ class ListEventCallback
         }
     }
 
+    public clearAllCallback()
+    {
+        this._objectCallbacks.length = 0;
+    }
+
+    public clearCallbackOf(filter: Object)
+    {
+        for(let i = 0; i<this._objectCallbacks.length; i++)
+        {
+            if(this._objectCallbacks[i].emitter == filter)
+            {
+                this._objectCallbacks.splice(i,1);
+                i--;
+            }
+        }
+    }
+
     public getObjectCallbacks(filter: Object|undefined): ObjectCallbackGeneric[]
     {
         return this._objectCallbacks.filter((objc: ObjectCallbackGeneric) => {
@@ -205,7 +222,7 @@ export class EventManager
         }
     }
 
-    private static executeEvent(eventName:string, argm:Object&Object&EventArgument<Object|undefined>, async:boolean|undefined, ctor: {new(...args:any[]):{}})
+    private static executeEvent(eventName:string, argm:Object&EventArgument<Object|undefined>, async:boolean|undefined, ctor: {new(...args:any[]):{}})
     {
         let ev:ListEventCallback|undefined;
 
@@ -235,20 +252,6 @@ export class EventManager
                     c.callback(argm)
                 }
             });
-
-            /*((<any>ev.event).followers).forEach((t:EventFollower)=>
-            {
-                if(t.emitter === null || argm.emitter == t.emitter)
-                {
-                    let arg : any = t.transform(argm);
-                    arg.emitter = argm.emitter;
-                    arg.queued = argm.queued;
-                    arg.following = true;
-
-                    this.executeEvent((<any>arg).constructor.eventName, arg,async, arg.constructor)
-                }
-                
-            })*/
         }
     }
 
@@ -410,6 +413,51 @@ export class EventManager
 
         ef.ctor = null;
         ef.emitter = null;
+    }
+
+    public static compressQueue(keep: { new(... arg:any[]): Object }, erase: { new(... arg:any[]): Object }[], sameEmitters:boolean = true)
+    {
+        if(!(<any>keep).hasBeenEventify)
+        {
+            throw("Event must be decorated with @Event");
+        }
+
+        for(let evo of erase)
+        {
+            if(!(<any>evo).hasBeenEventify)
+            {
+                throw("Event must be decorated with @Event");
+            }
+        }
+        let allKeptEmitters:Object[] = [];
+        let oneEmitter:boolean = false;
+        for(let qev of this._queuedEvents)
+        {
+            if (qev.eventName == (<any>keep).eventName)
+            {
+                oneEmitter = true;
+
+                if(qev.argm.emitter)
+                    allKeptEmitters.push(qev.argm.emitter);
+            }
+        }
+        console.log(allKeptEmitters)
+        if(sameEmitters && allKeptEmitters.length > 0)
+        {
+            this._queuedEvents = this._queuedEvents.filter((qev)=>{
+                let sameName = erase.some((ev)=> (<any>ev).eventName == qev.eventName);
+                let se = allKeptEmitters.some((em)=>(em)==qev.argm.emitter)
+                
+                return  (!sameName || !se)
+            })
+        }
+        if(!sameEmitters && oneEmitter)
+        {
+            this._queuedEvents = this._queuedEvents.filter((qev)=>{
+                let sameName = erase.some((ev)=> (<any>ev).eventName == qev.eventName)                
+                return  (!sameName)
+            })
+        }
     }
 }
 

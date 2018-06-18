@@ -66,6 +66,11 @@ export declare class EventManager {
         new (...args: any[]): U;
     }, t: EventTransformer<T, U>, emitter?: Object | undefined): EventFollower;
     static unfollow(ef: EventFollower): void;
+    static compressQueue(keep: {
+        new (...arg: any[]): Object;
+    }, erase: {
+        new (...arg: any[]): Object;
+    }[], sameEmitters?: boolean): void;
 }
 export declare class TriggerDispatchEvent {
     readonly callbackArgument: Object;

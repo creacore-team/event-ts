@@ -8,7 +8,9 @@
   "scripts": {
     "build": "tsc",
     "build-browser": " webpack",
-    "build-examples": "tsc ; echo 'library built' ; tsc --p ./examples ;  echo 'examples built'"
+    "build-examples": "tsc ; echo 'library built' ; tsc --p ./examples ;  echo 'examples built'",
+    "build-tests": "tsc ; echo 'library built' ; tsc --p ./tests ;  echo 'tests built'"
+
   },
   "repository": {
     "type": "git",

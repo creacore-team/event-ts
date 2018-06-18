@@ -13,7 +13,7 @@
   },
   "exclude" : [ 
     "./dist",
-    "./test",
+    "./tests",
     "./examples"
   ]
 }
