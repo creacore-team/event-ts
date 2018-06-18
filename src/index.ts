@@ -441,7 +441,6 @@ export class EventManager
                     allKeptEmitters.push(qev.argm.emitter);
             }
         }
-        console.log(allKeptEmitters)
         if(sameEmitters && allKeptEmitters.length > 0)
         {
             this._queuedEvents = this._queuedEvents.filter((qev)=>{
