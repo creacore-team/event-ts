@@ -1,6 +1,6 @@
 {
   "name": "@creacore/event-ts",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Simple, standalone and easy event library in typescript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,6 @@
     "build-browser": " webpack",
     "build-examples": "tsc ; echo 'library built' ; tsc --p ./examples ;  echo 'examples built'",
     "build-tests": "tsc ; echo 'library built' ; tsc --p ./tests ;  echo 'tests built'"
-
   },
   "repository": {
     "type": "git",
