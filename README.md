@@ -4,9 +4,21 @@ The library event-ts is a standalone typescript library for managing events. It 
 
 ---
 
-## Setting up
+# Link
+* [Setting Up](#setting_up)
+    * [npm](#setting_up_npm)
+    * [git & build](#setting_up_git)
+* [Examples](#examples)
+    * [Simple](#examples_simple)
+    * [More...](#examples_more)
+* [API](#api)
+    * [Event](#event_decorator)
+    * [EventManager](#eventmanager)
+    * [EventManager dispatched Event](#eventmanager_events)
 
-### npm
+## <a name="setting_up"></a>Setting up
+
+### <a name="setting_up_npm"></a>npm
 
 The easiest way to install is to use npm :
 ```shell
@@ -23,7 +35,7 @@ you can now import the component in you typescript file
 import {Event, EventManager} from "@creacore/event-ts";
 ```
 
-### git and build
+### <a name="setting_up_git"></a>git and build
 
 you can also clone the project from github
 
@@ -45,9 +57,9 @@ npm run build-browser
 create the file `event-ts.js` in the folder browser with the main declaraction of the library store in a variable `EVENTTS`.
 
 ---
-## Examples
+## <a name="examples"></a>Examples
 
-### Simple examples
+### <a name="examples_simple"></a>Simple examples
 
 Here is a simple example of how to use @creacore/event-ts.
 
@@ -75,7 +87,7 @@ When using a IDE supporting typescript, usefull suggestion will show up
 
 ![event-ts type support in Visual Studio Code](https://github.com/creacore-team/event-ts/raw/master/type_support.png)
 
-### Other examples
+### <a name="examples_more"></a>Other examples
 More examples are available in the examples directory. You can build the examples provided in repository by simply run
 ```shell
 npm run build-examples
@@ -84,7 +96,7 @@ npm run build-examples
 
 ---
 
-## API
+## <a name="api"></a>API
 
 ## <a name="event_decorator"></a> ***@Event***
 In order to define a class as an event, it must be decorated with `@Event` decorator. This decorator takes an object as a parameter that fulfill the `EventParameter` interface and configure the main behavior of the event. Note that all properties of `EventParameter` are optional.
