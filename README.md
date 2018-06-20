@@ -73,7 +73,7 @@ Event : Hello world !
 
 When using a IDE supporting typescript, usefull suggestion will show up
 
-![event-ts type support in Visual Studio Code](./type_support.png)
+![event-ts type support in Visual Studio Code](https://github.com/creacore-team/event-ts/raw/master/type_support.png)
 
 ### Other examples
 More examples are available in the examples directory. You can build the examples provided in repository by simply run
@@ -94,7 +94,7 @@ Note that the decorator add three parameters to your classes :
   * `queued` : a boolean which is `true` if the event has been queued before being dispatched
   * `following` : a boolean which is `true` if the event has been trigger because of a [follow rule](#follow)
 
->![event-ts type support in Visual Studio Code](./warning.png) 
+>![event-ts type support in Visual Studio Code](https://github.com/creacore-team/event-ts/raw/master/warning.png) 
 >**Your event class should never define the properties `emitter`, `queued` and `following` itself ! They will be erased when the event is dispatched**
 **Your event class should never define the _static_ properties `eventName`, `hasBeenEventify`, `async`, `queued`, `removeDuplicate`, `testDuplicate` and `followers` itself ! They will be erased when the decorator is applied**
 
