@@ -6,10 +6,11 @@
   "types": "dist/index.d.ts",
   "map": "dist/index.js.map",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build-node && npm run build-browser",
+    "build-node": "tsc",
     "build-browser": " webpack",
-    "build-examples": "tsc ; echo 'library built' ; tsc --p ./examples ;  echo 'examples built'",
-    "build-tests": "tsc ; echo 'library built' ; tsc --p ./tests ;  echo 'tests built'"
+    "build-examples": "tsc && echo 'library built' && tsc --p ./examples &&  echo 'examples built'",
+    "build-tests": "tsc && echo 'library built' && tsc --p ./tests &&  echo 'tests built'"
   },
   "repository": {
     "type": "git",

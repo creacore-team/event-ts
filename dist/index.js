@@ -332,7 +332,6 @@ var EventManager = (function () {
                     allKeptEmitters.push(qev.argm.emitter);
             }
         }
-        console.log(allKeptEmitters);
         if (sameEmitters && allKeptEmitters.length > 0) {
             this._queuedEvents = this._queuedEvents.filter(function (qev) {
                 var sameName = erase.some(function (ev) { return ev.eventName == qev.eventName; });

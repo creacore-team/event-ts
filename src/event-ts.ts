@@ -1,1 +1,5 @@
-export {EventManager, Event, TriggerDispatchEvent, AddListenerEvent, RemoveListenerEvent} from "./index"
+export {
+        EventManager, Event, 
+        EventParameter,
+        TriggerDispatchEvent, AddListenerEvent, RemoveListenerEvent
+    } from "./index"
