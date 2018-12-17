@@ -104,3 +104,12 @@ export declare class RemoveListenerEvent {
         new (...arg: any[]): any;
     }, success: boolean);
 }
+export declare class StartQueueEvent {
+    constructor();
+}
+export declare class StopQueueEvent {
+    constructor();
+}
+export declare class EndQueueEvent {
+    constructor();
+}

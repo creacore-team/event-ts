@@ -157,7 +157,7 @@ export class EventManager
     private static _queueCallStackSize = 0;
 
     public static addEventListener<T,U>(ctor: { new(... arg:any[]): T }, cb:EventCallback<T, U>, emitter:U|undefined = undefined):ObjectCallbackGeneric
-    {
+    {true
         if(!(<any>ctor).hasBeenEventify)
             throw("Event must be decorated with @Event");
 
@@ -319,6 +319,10 @@ export class EventManager
 
             this._queuedEvents = eventSaved;
         }
+        if(this._queuedEvents.length === 0)
+        {
+            EventManager.dispatchEvent(new EndQueueEvent(), this);
+        }
 
         return nevent;
     }
@@ -343,6 +347,7 @@ export class EventManager
             this._removeDuplicate = removeDuplicate;
             this._dontQueueAsync = dontQueueAsync;
             this._autoFlushAfter = autoFlushAfter;
+            EventManager.dispatchEvent(new StartQueueEvent(), this);
         }
         else if(this._stackEnableCall)
         {
@@ -364,6 +369,7 @@ export class EventManager
                 this.clearQueue();
             }
             this._queueCallStackSize = 0;
+            EventManager.dispatchEvent(new StopQueueEvent(), this);
             this._queueEnable = false;
         }
         else if (this._stackEnableCall)
@@ -490,4 +496,22 @@ export class RemoveListenerEvent
     public readonly eventConstructor: { new(...arg:any[]): any },
     public readonly success:boolean
     ){}
+}
+
+@Event({tag:"EventManager", async:false, queued:"Never"})
+export class StartQueueEvent
+{
+    constructor(){};
+}
+
+@Event({tag:"EventManager", async:false, queued:"Never"})
+export class StopQueueEvent
+{
+    constructor(){};
+}
+
+@Event({tag:"EventManager", async:true, queued:"Never"})
+export class EndQueueEvent
+{
+    constructor(){};
 }

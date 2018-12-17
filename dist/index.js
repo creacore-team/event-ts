@@ -117,6 +117,7 @@ var EventManager = (function () {
     }
     EventManager.addEventListener = function (ctor, cb, emitter) {
         if (emitter === void 0) { emitter = undefined; }
+        true;
         if (!ctor.hasBeenEventify)
             throw ("Event must be decorated with @Event");
         var ev = this._events.get(ctor.eventName);
@@ -234,6 +235,9 @@ var EventManager = (function () {
             }
             this._queuedEvents = eventSaved;
         }
+        if (this._queuedEvents.length === 0) {
+            EventManager.dispatchEvent(new EndQueueEvent(), this);
+        }
         return nevent;
     };
     Object.defineProperty(EventManager, "queueLength", {
@@ -259,6 +263,7 @@ var EventManager = (function () {
             this._removeDuplicate = removeDuplicate;
             this._dontQueueAsync = dontQueueAsync;
             this._autoFlushAfter = autoFlushAfter;
+            EventManager.dispatchEvent(new StartQueueEvent(), this);
         }
         else if (this._stackEnableCall) {
             this._queueCallStackSize++;
@@ -276,6 +281,7 @@ var EventManager = (function () {
                 this.clearQueue();
             }
             this._queueCallStackSize = 0;
+            EventManager.dispatchEvent(new StopQueueEvent(), this);
             this._queueEnable = false;
         }
         else if (this._stackEnableCall) {
@@ -395,4 +401,34 @@ var RemoveListenerEvent = (function () {
     return RemoveListenerEvent;
 }());
 exports.RemoveListenerEvent = RemoveListenerEvent;
+var StartQueueEvent = (function () {
+    function StartQueueEvent() {
+    }
+    ;
+    StartQueueEvent = __decorate([
+        Event({ tag: "EventManager", async: false, queued: "Never" })
+    ], StartQueueEvent);
+    return StartQueueEvent;
+}());
+exports.StartQueueEvent = StartQueueEvent;
+var StopQueueEvent = (function () {
+    function StopQueueEvent() {
+    }
+    ;
+    StopQueueEvent = __decorate([
+        Event({ tag: "EventManager", async: false, queued: "Never" })
+    ], StopQueueEvent);
+    return StopQueueEvent;
+}());
+exports.StopQueueEvent = StopQueueEvent;
+var EndQueueEvent = (function () {
+    function EndQueueEvent() {
+    }
+    ;
+    EndQueueEvent = __decorate([
+        Event({ tag: "EventManager", async: true, queued: "Never" })
+    ], EndQueueEvent);
+    return EndQueueEvent;
+}());
+exports.EndQueueEvent = EndQueueEvent;
 //# sourceMappingURL=index.js.map
